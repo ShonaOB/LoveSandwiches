@@ -53,8 +53,8 @@ def validate_data(values):
     return True
 
 
-#--------------------------------------------------------
-#def update_sales_worksheet(data):
+# --------------------------------------------------------
+# def update_sales_worksheet(data):
 #
 #    update sales worksheet add new row with the list of data provided
 #
@@ -62,7 +62,7 @@ def validate_data(values):
 #    sales_worksheet = SHEET.worksheet("sales")
 #    sales_worksheet.append_row(data)
 #    print('sales worksheet updated successfully \n')
-#--------------------------------------------------------
+# --------------------------------------------------------
 
 
 def calculate_surplus_data(sales_row):
@@ -80,18 +80,18 @@ def calculate_surplus_data(sales_row):
     for stock, sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
         surplus_data.append(surplus)
-              
+             
     return surplus_data
 
 
-#--------------------------------------------------------
-#def update_surplus_worksheet(data):
+# --------------------------------------------------------
+# def update_surplus_worksheet(data):
 #    update the surplus worksheet with the calculated surplus numbers
 #    print("Updating surplus worksheet...\n")
 #    surplus_worksheet = SHEET.worksheet("surplus")
 #    surplus_worksheet.append_row(data)
 #    print('surplus worksheet updated successfully')
-#--------------------------------------------------------
+# --------------------------------------------------------
 
 
 def update_worksheet(data, worksheet):
@@ -107,13 +107,14 @@ def update_worksheet(data, worksheet):
 
 def get_last_5_entries_sales():
     """
-    Collect colums of data from sales worksheet, collecting the last five entries for each
+    Collect colums of data from sales worksheet, collecting the last five
+    entries for each
     sandwich and returns the data as a list of lists
     """
     sales = SHEET.worksheet('sales')
 
     columns = []
-    for ind in range(1,7):
+    for ind in range(1, 7):
         column = sales.col_values(ind)
         columns.append(column[-5:])
     return columns
@@ -134,6 +135,7 @@ def calculate_stock_data(data):
 
     return new_stock_data
 
+
 def main():
     """
     run all program functions
@@ -150,5 +152,4 @@ def main():
 
 print("Welcome to Love Sandwiches Data Automation \n")
 main()
-
 
