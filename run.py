@@ -1,6 +1,5 @@
 import gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -37,7 +36,7 @@ def get_sales_data():
 
 def validate_data(values):
     """
-    Inside the try, converts all string values into integers. 
+    Inside the try, converts all string values into integers.
     Raises valueError if strings cannot be converted into int
     or if there aren't exactly 6 values
     """
@@ -54,20 +53,21 @@ def validate_data(values):
     return True
 
 
+#--------------------------------------------------------
+#def update_sales_worksheet(data):
+#
+#    update sales worksheet add new row with the list of data provided
+#
+#    print('Updating sales worksheet.../n')
+#    sales_worksheet = SHEET.worksheet("sales")
+#    sales_worksheet.append_row(data)
+#    print('sales worksheet updated successfully \n')
+#--------------------------------------------------------
 
-"""
-def update_sales_worksheet(data):
-    
-    update sales worksheet add new row with the list of data provided
 
-    print('Updating sales worksheet.../n')
-    sales_worksheet = SHEET.worksheet("sales")
-    sales_worksheet.append_row(data)
-    print('sales worksheet updated successfully \n')
-    """
 def calculate_surplus_data(sales_row):
     """
-    compare sales with stock and calculate surplus. 
+    compare sales with stock and calculate surplus.
     The surplus is defined as sales - stock:
     - positive surplus indicates waste
     - negative surplus indicates extra made
@@ -80,18 +80,20 @@ def calculate_surplus_data(sales_row):
     for stock, sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
         surplus_data.append(surplus)
-    
+              
     return surplus_data
 
-"""
-def update_surplus_worksheet(data):
 
-    update the surplus worksheet with the calculated surplus numbers
-    print("Updating surplus worksheet...\n")
-    surplus_worksheet = SHEET.worksheet("surplus")
-    surplus_worksheet.append_row(data)
-    print('surplus worksheet updated successfully')
-"""
+#--------------------------------------------------------
+#def update_surplus_worksheet(data):
+#    update the surplus worksheet with the calculated surplus numbers
+#    print("Updating surplus worksheet...\n")
+#    surplus_worksheet = SHEET.worksheet("surplus")
+#    surplus_worksheet.append_row(data)
+#    print('surplus worksheet updated successfully')
+#--------------------------------------------------------
+
+
 def update_worksheet(data, worksheet):
     """
     receives a list of integers to be inserted into a worksheet
@@ -101,6 +103,23 @@ def update_worksheet(data, worksheet):
     worksheet_to_update = SHEET.worksheet(worksheet)
     worksheet_to_update.append_row(data)
     print(f"{worksheet} worksheet updated successfully\n")
+
+
+def get_last_5_entries_sales():
+    """
+    Collect colums of data from sales worksheet, collecting the last five entries for each
+    sandwich and returns the data as a list of lists
+    """
+    sales = SHEET.worksheet('sales')
+    # column = sales.col_values(3)
+    # print(column)
+
+    columns = []
+    for ind in range(1,7):
+        column = sales.col_values(ind)
+        columns.append(column[-5:])
+    print(columns)
+
 
 
 def main():
@@ -113,5 +132,8 @@ def main():
     new_surplus_data = calculate_surplus_data(sales_data)
     update_worksheet(new_surplus_data, 'surplus')
 
+
 print("Welcome to Love Sandwiches Data Automation \n")
-main()
+# main()
+
+get_last_5_entries_sales()
